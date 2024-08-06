@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { firebaseLogIn, firebaseSignUp } from "../services/AuthServices";
 import { User } from "firebase/auth";
+import { router, SplashScreen } from "expo-router";
 
 interface AuthContextData {
     user?: User;
@@ -11,6 +12,8 @@ interface AuthContextData {
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
+SplashScreen.preventAutoHideAsync();
 
 export const AuthProvider = ({ children }: any) => {
     const [user, setUser] = useState<User>();
@@ -64,6 +67,20 @@ export const AuthProvider = ({ children }: any) => {
     useEffect(() => {
         loadUser();
     }, []);
+
+    useEffect(() => {
+        if (!isLoading) {
+            SplashScreen.hideAsync();
+
+            if (!user) {
+                console.log("User not logged in");
+                router.navigate('/login');
+            } else {
+                console.log("User logged in");
+                router.navigate('/(tabs)');
+            }
+        }
+    }, [isLoading, user]);
 
     return (
         <AuthContext.Provider value={{ user, isLoading, login, logout, signup }}>

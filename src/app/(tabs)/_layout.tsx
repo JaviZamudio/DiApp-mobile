@@ -4,23 +4,11 @@ import { SplashScreen, Tabs, router } from 'expo-router';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 
-SplashScreen.preventAutoHideAsync();
-
 export default function AppLayout() {
   const { user, isLoading } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (!isLoading) {
-      SplashScreen.hideAsync();
-
-      if (!user) {
-        router.navigate('/login');
-      }
-    }
-  }, [isLoading, user]);
-
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: '#01a0aa' }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -34,6 +22,13 @@ export default function AppLayout() {
         options={{
           title: 'Facts',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="info" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
         }}
       />
     </Tabs>

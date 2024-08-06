@@ -1,5 +1,4 @@
 import { AuthContext } from "@/contexts/AuthContext";
-import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
@@ -8,6 +7,7 @@ const logo = require('@/../assets/LogoPNG.png');
 
 export default function LoginPage() {
   const [loginOrRegister, setLoginOrRegister] = useState("login");
+  useContext(AuthContext);
 
   return (
     <ScrollView contentContainerStyle={styles.fullContainer}>
@@ -60,12 +60,6 @@ const LoginForm = () => {
       <TextInput style={styles.textinput} placeholder="Email" keyboardType='email-address' onChangeText={setEmail} value={email} />
       <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} maxLength={20} onChangeText={setPassword} value={password} />
 
-      {/* <TouchableOpacity style={{ marginTop: 20, backgroundColor: '#01a0aa', padding: 10, borderRadius: 5, width: 150 }}
-        onPress={() => login(email, password)}
-      >
-        <Text style={{ color: '#fff', fontSize: 20, textAlign: "center" }}>Login</Text>
-      </TouchableOpacity> */}
-
       <Button mode="contained" style={styles.button} onPress={() => login(email, password)}>
         Login
       </Button>
@@ -104,12 +98,9 @@ const RegisterForm = () => {
       <TextInput style={styles.textinput} placeholder="Password" secureTextEntry={true} maxLength={20} onChangeText={(text) => handleFormChange("password", text)} value={form.password} />
       <TextInput style={styles.textinput} placeholder="Confirm Password" secureTextEntry={true} maxLength={20} onChangeText={(text) => handleFormChange("confirmPassword", text)} value={form.confirmPassword} />
 
-      <TouchableOpacity
-        style={{ marginTop: 20, backgroundColor: '#01a0aa', padding: 10, borderRadius: 5, width: 150 }}
-        onPress={handleRegister}
-      >
-        <Text style={{ color: '#fff', fontSize: 20, textAlign: "center" }}>Register</Text>
-      </TouchableOpacity>
+      <Button mode="contained" style={styles.button} onPress={handleRegister}>
+        Register
+      </Button>
     </>
   );
 }
@@ -140,10 +131,8 @@ const styles = StyleSheet.create({
     width: 300,
   },
   button: {
-    padding: 8,
-    borderRadius: 5,
+    padding: 4 * 1,
     width: 150,
     marginTop: 20,
-    fontSize: 20,
   },
 });

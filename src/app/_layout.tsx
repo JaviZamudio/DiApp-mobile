@@ -1,6 +1,6 @@
 import { AuthProvider } from '@/contexts/AuthContext';
-import { Slot, Stack } from 'expo-router';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
+import { useColorScheme } from 'react-native';
 import { PaperProvider, MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
 import { ThemeProp } from 'react-native-paper/lib/typescript/src/types';
 
@@ -28,8 +28,8 @@ export default function RootLayout() {
     <PaperProvider theme={theme}>
       <AuthProvider>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
           <Stack.Screen name='login' options={{ headerShown: false }} />
+          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         </Stack>
       </AuthProvider>
     </PaperProvider>
