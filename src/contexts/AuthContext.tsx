@@ -1,9 +1,10 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { firebaseLogIn, firebaseSignUp } from "../services/AuthServices";
 import { User } from "firebase/auth";
 
 interface AuthContextData {
-    user: User;
+    user?: User;
+    isLoading: boolean;
     signup: (email: string, password: string) => void;
     login: (email: string, password: string) => void;
     logout: () => void;
@@ -12,7 +13,21 @@ interface AuthContextData {
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: any) => {
-    const [user, setUser] = useState({} as User);
+    const [user, setUser] = useState<User>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    const loadUser = () => {
+        setIsLoading(true);
+        // const firebaseUser = await firebaseGetCurrentUser();
+        // if (!firebaseUser) {
+        //     console.log("Error getting current user");
+        //     alert("Error getting current user");
+        //     setIsLoading(false);
+        //     return;
+        // }
+        // setUser(firebaseUser);
+        setIsLoading(false);
+    };
 
     const signup = async (email: string, password: string) => {
         try {
@@ -43,11 +58,15 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logout = () => {
-        setUser({} as User);
+        setUser(undefined);
     };
 
+    useEffect(() => {
+        loadUser();
+    }, []);
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, signup }}>
+        <AuthContext.Provider value={{ user, isLoading, login, logout, signup }}>
             {children}
         </AuthContext.Provider>
     );

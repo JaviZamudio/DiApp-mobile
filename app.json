@@ -3,13 +3,14 @@
     "name": "diapp-mobile",
     "slug": "diapp-mobile",
     "version": "1.0.0",
+    "scheme": "diapp",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#73d2d9"
+      "backgroundColor": "#fff"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
