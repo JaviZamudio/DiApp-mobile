@@ -8,7 +8,7 @@ export default function AppLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={24} name="home" color={color} />,
           headerTitle: 'DiApp',
         }}
       />
@@ -16,14 +16,21 @@ export default function AppLayout() {
         name="facts"
         options={{
           title: 'Today Facts',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="info" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={24} name="info" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: 'Favorites',
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="bookmark" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <Ionicons size={28} name="person" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons size={24} name="person" color={color} />,
         }}
       />
     </Tabs>

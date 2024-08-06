@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { firebaseLogIn, firebaseSignUp } from "../services/AuthServices";
 import { User } from "firebase/auth";
-import { router, SplashScreen } from "expo-router";
+import { router, SplashScreen, usePathname } from "expo-router";
 
 interface AuthContextData {
     user?: User;
@@ -18,6 +18,7 @@ SplashScreen.preventAutoHideAsync();
 export const AuthProvider = ({ children }: any) => {
     const [user, setUser] = useState<User>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const pathName = usePathname();
 
     const loadUser = () => {
         setIsLoading(true);
@@ -70,17 +71,19 @@ export const AuthProvider = ({ children }: any) => {
 
     useEffect(() => {
         if (!isLoading) {
-            SplashScreen.hideAsync();
-
-            if (!user) {
+            if (!user && pathName !== '/login') {
                 console.log("User not logged in");
-                router.navigate('/login');
-            } else {
-                console.log("User logged in");
-                router.navigate('/(tabs)');
+                router.replace('/login');
             }
+
+            if (user && pathName === '/login') {
+                console.log("User logged in");
+                router.replace('/(tabs)');
+            }
+
+            setTimeout(() => SplashScreen.hideAsync(), user ? 0 : 1000);
         }
-    }, [isLoading, user]);
+    }, [isLoading, user, pathName]);
 
     return (
         <AuthContext.Provider value={{ user, isLoading, login, logout, signup }}>
