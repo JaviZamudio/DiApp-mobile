@@ -1,12 +1,7 @@
-import { StyleSheet, View, Text } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
-import { SplashScreen, Tabs, router } from 'expo-router';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '@/contexts/AuthContext';
+import { Tabs } from 'expo-router';
 
 export default function AppLayout() {
-  const { user, isLoading } = useContext(AuthContext);
-
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: '#01a0aa' }}>
       <Tabs.Screen
@@ -20,7 +15,7 @@ export default function AppLayout() {
       <Tabs.Screen
         name="facts"
         options={{
-          title: 'Facts',
+          title: 'Today Facts',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="info" color={color} />,
         }}
       />
@@ -34,26 +29,3 @@ export default function AppLayout() {
     </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  tabs: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 16,
-    padding: 8,
-    width: "100%",
-    justifyContent: 'space-around',
-    marginTop: "auto",
-    backgroundColor: "fff",
-  },
-  tab: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    gap: 4,
-  }
-});

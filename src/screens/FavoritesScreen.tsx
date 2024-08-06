@@ -49,6 +49,8 @@ export const Fact = ({ fact }: { fact: UsableDato }) => {
   const [isFavorite, setIsFavorite] = useState(fact.isFavorite);
 
   const handlePress = () => {
+    if (!user) return
+
     if (isFavorite) {
       removeFavorite(user?.uid, fact.id);
     } else {
@@ -61,7 +63,7 @@ export const Fact = ({ fact }: { fact: UsableDato }) => {
   useEffect(() => {
     setIsFavorite(fact.isFavorite);
   }, [fact]);
-  
+
   return (
     <View style={{ padding: 20, margin: 20, borderRadius: 10, backgroundColor: '#fff', marginTop: 0 }} key={fact.id}>
       <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>

@@ -22,19 +22,19 @@ export const getFavorites = async (userId: string) => {
     // Get all categories
     const categoriasSnapshot = await getDocs(query(collection(db, "categorias")));
 
-    const datos = await Promise.all(usuario.datos.map(async (datoId: string) => {
+    const datos = await Promise.all(usuario?.datos.map(async (datoId: string) => {
         const datoSnapshot = await getDoc(doc(db, "datos", datoId));
-        const dato = datoSnapshot.data();
+        const dato = datoSnapshot.data()
 
-        const categoriaSnapshot = categoriasSnapshot.docs.find((categoria) => categoria.id === dato.categoriaId);
-        const categoria = categoriaSnapshot.data();
+        const categoriaSnapshot = categoriasSnapshot.docs.find((categoria) => categoria.id === dato?.categoriaId);
+        const categoria = categoriaSnapshot?.data();
 
         return {
-            id: dato.id,
-            titulo: dato.titulo,
-            contenido: dato.contenido,
-            categoria: categoria.nombre,
-            categoriaColor: categoria.color,
+            id: dato?.id,
+            titulo: dato?.titulo,
+            contenido: dato?.contenido,
+            categoria: categoria?.nombre,
+            categoriaColor: categoria?.color,
             isFavorite: true,
         };
     }));
@@ -70,20 +70,20 @@ export const removeFavorite = async (userId: string, datoId: string) => {
 
 export const prepareFactsForFuture = async () => {
     const q = query(collection(db, "datos"));
-    const querySnapshot = await getDocs(q);
-    const counters = {};
+    const factsSnapshots = await getDocs(q);
+    const counters = {} as { [key: string]: number };
 
     console.log("Preparing facts for future...");
 
-    querySnapshot.forEach((datoSnapshot) => {
-        const dato = datoSnapshot.data();
-        
+    factsSnapshots.forEach((factSnapshot) => {
+        const fact = factSnapshot.data()
+
         // add the counter's number of days to the current date
-        counters[dato.categoriaId] = (counters[dato.categoriaId] ?? -1) + 1;
-        console.log({counters})
+        counters[fact.categoriaId] = (counters[fact.categoriaId] ?? -1) + 1;
+        console.log({ counters })
 
-        const newDate = new Date(Date.now() + counters[dato.categoriaId] * 24 * 60 * 60 * 1000);
-        updateDoc(datoSnapshot.ref, { fecha: (newDate.getMonth() + 1) + "/" + newDate.getDate() + "/" + newDate.getFullYear()});
-
+        const newDate = new Date(Date.now() + counters[fact.categoriaId] * 24 * 60 * 60 * 1000);
+        // updateDoc(factSnapshot.ref, { fecha: (newDate.getMonth() + 1) + "/" + newDate.getDate() + "/" + newDate.getFullYear() });
+        updateDoc(factSnapshot.ref, { fecha: `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}` });
     });
 };
