@@ -18,10 +18,7 @@ export const firebaseSignUp = async (email: string, password: string) => {
 
         return user;
     } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorCode, errorMessage);
+        console.log(error);
     }
 }
 
@@ -31,10 +28,7 @@ export const firebaseLogIn = async (email: string, password: string) => {
         // Signed in 
         return userCredential.user;
     } catch (error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorCode, errorMessage);
+        console.log(error);
     }
 }
 

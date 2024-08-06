@@ -10,7 +10,6 @@ import { ScrollView, Text, View } from 'react-native'
 export default function FactsScreen() {
   const { user } = useContext(AuthContext);
   const [facts, setFacts] = useState<{ titulo: string, contenido: string, categoria: string, categoriaColor: string, id: string, isFavorite: boolean }[]>([]);
-  const isFocused = useIsFocused();
 
   const getFacts = async () => {
     // facts with fecha == getCurrentDate(), categoriaId in usuario.categorias, just the last for each categoriaId
@@ -26,8 +25,6 @@ export default function FactsScreen() {
     // Get facts
     q = query(collection(db, 'datos'), where('fecha', '==', getCurrentDate()), where('categoriaId', 'in', usuario.categorias));
     const datosSnapshot = await getDocs(q);
-
-    console.log("User Categories: ", usuario.categorias);
 
     const datos = datosSnapshot.docs.map(doc => {
       const data = doc.data();
@@ -47,9 +44,8 @@ export default function FactsScreen() {
   }
 
   useEffect(() => {
-    if (!isFocused) return;
     getFacts();
-  }, [isFocused]);
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={{ backgroundColor: '#ddd', flexGrow: 1 }}>

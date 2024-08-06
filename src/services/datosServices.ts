@@ -80,10 +80,11 @@ export const prepareFactsForFuture = async () => {
 
         // add the counter's number of days to the current date
         counters[fact.categoriaId] = (counters[fact.categoriaId] ?? -1) + 1;
-        console.log({ counters })
 
         const newDate = new Date(Date.now() + counters[fact.categoriaId] * 24 * 60 * 60 * 1000);
         // updateDoc(factSnapshot.ref, { fecha: (newDate.getMonth() + 1) + "/" + newDate.getDate() + "/" + newDate.getFullYear() });
         updateDoc(factSnapshot.ref, { fecha: `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear()}` });
     });
+
+    console.log({ counters })
 };

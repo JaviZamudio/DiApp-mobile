@@ -1,3 +1,4 @@
+import { FIREBASE_CONFIG, NASA_API_KEY } from "@/configs/configs";
 import { db } from "@/configs/firebase";
 import { prepareFactsForFuture } from "@/services/datosServices";
 import { getCurrentDate } from "@/utils/utils";
@@ -20,7 +21,7 @@ export default function HomePage() {
   });
 
   const getAPOD = async () => {
-    const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=gi8iMBP7D9e8SVBo1iRp9AxRkEpaCHkNHXBpop47`);
+    const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`);
     const body = await response.json();
 
     console.log("Got APOD");
@@ -39,7 +40,7 @@ export default function HomePage() {
     }
 
     setFactOfTheDay(querySnapshot.docs[0]?.data() as any);
-    console.log("Got Fact of the day: ", querySnapshot.docs[0]?.data());
+    console.log("Got Fact of the day");
   }
 
   const getConmemoration = async () => {
@@ -53,14 +54,14 @@ export default function HomePage() {
     }
 
     setConmemoration(querySnapshot.docs[0]?.data() as any);
-    console.log("Got Conmemoration: ", querySnapshot.docs[0]?.data());
+    console.log("Got Conmemoration");
   }
 
   useEffect(() => {
     getAPOD();
     getFactOfTheDay();
     getConmemoration();
-    prepareFactsForFuture();
+    // prepareFactsForFuture();
   }, []);
 
   return (
