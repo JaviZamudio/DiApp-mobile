@@ -88,7 +88,7 @@ const RegisterForm = () => {
       return;
     }
 
-    signup(form.email, form.password);
+    signup(form.email, form.password, form.name);
   }
 
   return (

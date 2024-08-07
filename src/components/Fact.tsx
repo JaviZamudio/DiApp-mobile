@@ -26,7 +26,7 @@ export const Fact = ({ fact }: { fact: UsableDato }) => {
   }, [fact]);
 
   return (
-    <View style={{ padding: 20, margin: 20, borderRadius: 10, backgroundColor: '#fff', marginTop: 0 }} key={fact.id}>
+    <View style={{ padding: 20, margin: 20, borderRadius: 10, backgroundColor: fact.categoriaColor, marginTop: 0 }} key={fact.id}>
       <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
         {fact.titulo}
       </Text>
@@ -34,7 +34,7 @@ export const Fact = ({ fact }: { fact: UsableDato }) => {
         {fact.contenido}
       </Text>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text style={{ fontSize: 16, color: fact.categoriaColor, textAlign: 'right' }}>
+        <Text style={{ fontSize: 16, color: "#000", textAlign: 'right' }}>
           #{fact.categoria}
         </Text>
         {/* Button to make it favorite */}

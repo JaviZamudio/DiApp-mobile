@@ -2,15 +2,16 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import { auth, db } from "../configs/firebase";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
-export const firebaseSignUp = async (email: string, password: string) => {
+export const firebaseSignUp = async (email: string, password: string, name: string) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         // Signed in 
         const user = userCredential.user;
 
         const docRef = await setDoc(doc(db, "usuarios", user?.uid), {
-            email: user?.email,
             uid: user?.uid,
+            email: user?.email,
+            name: name,
             createdAt: new Date(),
             categorias: [],
             datos: [],

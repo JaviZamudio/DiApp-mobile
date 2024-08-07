@@ -9,7 +9,7 @@ export default function ProfileScreen() {
     const [categories, setCategories] = useState<UsableCategory[]>([]);
 
     useEffect(() => {
-        getCategories(user.uid).then((categories) => {
+        getCategories(user?.uid).then((categories) => {
             setCategories(categories);
         });
     }, []);
@@ -25,7 +25,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
 
             {/* Categories */}
-            <Text style={{fontSize: 20, marginTop: 20}}>Categories</Text>
+            <Text style={{ fontSize: 20, marginTop: 20 }}>Categories</Text>
             <FlatList
                 data={categories}
                 renderItem={({ item }) => <Category category={item} />}
@@ -42,17 +42,17 @@ interface UsableCategory {
     color: string;
     inUser: boolean;
 }
-const Category = ({ category }: {category: UsableCategory}) => {
+const Category = ({ category }: { category: UsableCategory }) => {
     const { user } = useContext(AuthContext);
     const [checked, setChecked] = useState(category.inUser);
 
     const handlePress = async () => {
         if (checked) {
             console.log("Removing category");
-            await removeCategory(user.uid, category.id);
+            await removeCategory(user?.uid, category.id);
         } else {
             console.log("Adding category");
-            await addCategory(user.uid, category.id);
+            await addCategory(user?.uid, category.id);
         }
 
         setChecked(!checked);

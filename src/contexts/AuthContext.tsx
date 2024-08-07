@@ -2,11 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import { firebaseLogIn, firebaseSignUp } from "../services/AuthServices";
 import { User } from "firebase/auth";
 import { router, SplashScreen, usePathname } from "expo-router";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/configs/firebase";
 
 interface AuthContextData {
-    user?: User;
+    user?: User & { name: string };
     isLoading: boolean;
-    signup: (email: string, password: string) => void;
+    signup: (email: string, password: string, name: string) => void;
     login: (email: string, password: string) => void;
     logout: () => void;
 }
@@ -16,7 +18,7 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 SplashScreen.preventAutoHideAsync();
 
 export const AuthProvider = ({ children }: any) => {
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User & { name: string }>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const pathName = usePathname();
 
@@ -33,15 +35,15 @@ export const AuthProvider = ({ children }: any) => {
         setIsLoading(false);
     };
 
-    const signup = async (email: string, password: string) => {
+    const signup = async (email: string, password: string, name: string) => {
         try {
-            const firebaseUser = await firebaseSignUp(email, password);
+            const firebaseUser = await firebaseSignUp(email, password, name);
             if (!firebaseUser) {
                 console.log("Error signing up");
                 alert("Error signing up");
                 return;
             }
-            setUser(firebaseUser);
+            setUser({ ...firebaseUser, name });
         } catch (error) {
             console.log(error);
         }
@@ -50,12 +52,18 @@ export const AuthProvider = ({ children }: any) => {
     const login = async (email: string, password: string) => {
         try {
             const firebaseUser = await firebaseLogIn(email, password);
+            const userRef = doc(db, 'usuarios', firebaseUser?.uid as string);
+            const userDoc = await getDoc(userRef);
+
             if (!firebaseUser) {
                 console.log("Error logging in");
                 alert("Error logging in");
                 return;
             }
-            setUser(firebaseUser);
+
+            console.log({ ...firebaseUser, ...userDoc.data() })
+
+            setUser({ ...firebaseUser, name: userDoc.data()?.name });
         } catch (error) {
             console.log(error);
         }
