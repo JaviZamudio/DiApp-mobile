@@ -34,7 +34,7 @@ export default function FavoritesPage() {
   }, [isFocused]);
 
   return (
-    <ScrollView contentContainerStyle={{ backgroundColor: '#ddd', flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ height: 20 }} />
       {facts.map(fact => {
         return (

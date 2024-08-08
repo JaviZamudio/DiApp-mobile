@@ -49,7 +49,7 @@ export default function HomePage() {
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      console.log('No matching documents.');
+      console.log('No matching documents in efemerides.');
       return;
     }
 

@@ -1,12 +1,17 @@
 import { createContext, useEffect, useState } from "react";
 import { firebaseLogIn, firebaseSignUp } from "../services/AuthServices";
-import { User } from "firebase/auth";
+import { User as FirebaseUser } from "firebase/auth";
 import { router, SplashScreen, usePathname } from "expo-router";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/configs/firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+interface User extends FirebaseUser {
+    name: string;
+}
 
 interface AuthContextData {
-    user?: User & { name: string };
+    user?: User;
     isLoading: boolean;
     signup: (email: string, password: string, name: string) => void;
     login: (email: string, password: string) => void;
@@ -18,11 +23,11 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 SplashScreen.preventAutoHideAsync();
 
 export const AuthProvider = ({ children }: any) => {
-    const [user, setUser] = useState<User & { name: string }>();
+    const [user, setUser] = useState<User>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const pathName = usePathname();
 
-    const loadUser = () => {
+    const loadUser = async () => {
         setIsLoading(true);
         // const firebaseUser = await firebaseGetCurrentUser();
         // if (!firebaseUser) {
@@ -32,7 +37,17 @@ export const AuthProvider = ({ children }: any) => {
         //     return;
         // }
         // setUser(firebaseUser);
-        setIsLoading(false);
+
+        await AsyncStorage.getItem('user').then((user) => {
+            if (user) {
+                const userObj = JSON.parse(user) as User;
+                setUser(userObj);
+            }
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setIsLoading(false);
+        });
     };
 
     const signup = async (email: string, password: string, name: string) => {
@@ -43,7 +58,8 @@ export const AuthProvider = ({ children }: any) => {
                 alert("Error signing up");
                 return;
             }
-            setUser({ ...firebaseUser, name });
+
+            login(email, password);
         } catch (error) {
             console.log(error);
         }
@@ -61,7 +77,7 @@ export const AuthProvider = ({ children }: any) => {
                 return;
             }
 
-            console.log({ ...firebaseUser, ...userDoc.data() })
+            await AsyncStorage.setItem('user', JSON.stringify(firebaseUser));
 
             setUser({ ...firebaseUser, name: userDoc.data()?.name });
         } catch (error) {
@@ -71,6 +87,7 @@ export const AuthProvider = ({ children }: any) => {
 
     const logout = () => {
         setUser(undefined);
+        AsyncStorage.removeItem('user');
     };
 
     useEffect(() => {
