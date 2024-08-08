@@ -12,6 +12,7 @@ const customLightTheme: MD3Theme = {
     secondary: '#01a0aa',
     tertiary: '#01a0aa',
     error: '#f00',
+    surface: '#fff',
   },
 }
 

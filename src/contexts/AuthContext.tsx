@@ -29,14 +29,6 @@ export const AuthProvider = ({ children }: any) => {
 
     const loadUser = async () => {
         setIsLoading(true);
-        // const firebaseUser = await firebaseGetCurrentUser();
-        // if (!firebaseUser) {
-        //     console.log("Error getting current user");
-        //     alert("Error getting current user");
-        //     setIsLoading(false);
-        //     return;
-        // }
-        // setUser(firebaseUser);
 
         await AsyncStorage.getItem('user').then((user) => {
             if (user) {
@@ -77,9 +69,14 @@ export const AuthProvider = ({ children }: any) => {
                 return;
             }
 
-            await AsyncStorage.setItem('user', JSON.stringify(firebaseUser));
+            const userInfo = {
+                ...firebaseUser,
+                name: userDoc.data()?.name
+            };
 
-            setUser({ ...firebaseUser, name: userDoc.data()?.name });
+            await AsyncStorage.setItem('user', JSON.stringify(userInfo));
+
+            setUser(userInfo);
         } catch (error) {
             console.log(error);
         }

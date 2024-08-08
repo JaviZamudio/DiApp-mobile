@@ -20,28 +20,12 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 4 * 4 }}>
-
-      {/* <Text>
-        Name: {user?.displayName}
-        Email: {user?.email}
-      </Text> */}
-
-      <Card>
+      <Card style={{ backgroundColor: theme.colors.surface }} >
         <Card.Title
-          // title="Profile"
-          // subtitle="User Information"
           title={user?.name}
           subtitle={user?.email}
           left={(props) => <Avatar.Icon {...props} icon="account" />}
         />
-        {/* <Card.Content>
-          <Text>
-            <Text style={{ fontWeight: 'bold' }}>Name:</Text> {user?.name}
-          </Text>
-          <Text>
-            <Text style={{ fontWeight: 'bold' }}>Email:</Text> {user?.email}
-          </Text>
-        </Card.Content> */}
 
         <Card.Actions>
           <Button mode='outlined' onPress={() => logout()} icon='logout' textColor={theme.colors.error}>
@@ -51,13 +35,7 @@ export default function ProfileScreen() {
       </Card>
 
 
-      {/* Categories */}
       <Text style={{ fontSize: 20, marginTop: 20 }}>Categories</Text>
-      {/* <FlatList
-        data={categories}
-        renderItem={({ item }) => <Category category={item} />}
-        keyExtractor={item => item.id}
-      /> */}
       {categories.map((category) => {
         return (
           <Category category={category} key={category.id} />
