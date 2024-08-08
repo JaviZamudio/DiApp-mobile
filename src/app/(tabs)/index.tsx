@@ -9,7 +9,7 @@ import { Image, ScrollView, Text, View } from "react-native";
 export default function HomePage() {
   const [apod, setApod] = useState({
     title: '',
-    url: '-',
+    url: '',
     explanation: ''
   });
   const [factOfTheDay, setFactOfTheDay] = useState({
@@ -105,10 +105,12 @@ export default function HomePage() {
           {apod.title}
         </Text>
         {/* Astronomy picture of the day data */}
-        <Image
-          source={{ uri: apod.url }}
-          style={{ width: '100%', height: 300, marginBottom: 10 }}
-        />
+        {apod.url &&
+          <Image
+            source={{ uri: apod.url }}
+            style={{ width: '100%', height: 300, marginBottom: 10 }}
+          />
+        }
         {/* Tag (#AstronomyPictureOfTheDay) */}
         <Text style={{ fontSize: 16, color: '#aaa', textAlign: 'right' }}>
           #AstronomyPictureOfTheDay
