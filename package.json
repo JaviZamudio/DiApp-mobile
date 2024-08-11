@@ -7,7 +7,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "emulator": "D:/ProgramFiles/Android/sdk/emulator/emulator.exe -avd Pixel_8_API_34 -feature -Vulkan"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.23.1",

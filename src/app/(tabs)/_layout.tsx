@@ -1,17 +1,29 @@
 import { Credits } from '@/components/Credits';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { View } from 'react-native';
+import { useTheme } from 'react-native-paper';
 
 export default function AppLayout() {
+  const theme = useTheme();
+
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: '#01a0aa', headerRight: () => <Credits /> }} >
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: '#01a0aa',
+        headerRight: () => <Credits />,
+        headerTintColor: theme.colors.onSurface,
+        headerStyle: { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.surfaceDisabled },
+        tabBarStyle: { backgroundColor: theme.colors.surface, borderTopColor: theme.colors.surfaceDisabled },
+      }}
+      sceneContainerStyle={{ backgroundColor: theme.colors.background }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome size={24} name="home" color={color} />,
           headerTitle: 'DiApp',
+
         }}
       />
       <Tabs.Screen

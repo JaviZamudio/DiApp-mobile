@@ -12,7 +12,11 @@ const customLightTheme: MD3Theme = {
     secondary: '#01a0aa',
     tertiary: '#01a0aa',
     error: '#f00',
-    surface: '#fff',
+    surface: '#eee',
+    background: '#fff',
+    onSurface: '#000',
+    onBackground: '#000',
+    onSurfaceVariant: '#333',
   },
 }
 
@@ -21,8 +25,14 @@ const customDarkTheme: MD3Theme = {
   colors: {
     ...MD3LightTheme.colors,
     primary: '#01a0aa',
-    surface: '#fff',
-    background: '#fff',
+    secondary: '#01a0aa',
+    tertiary: '#01a0aa',
+    error: '#e74c3c',
+    surface: '#333',
+    background: '#121212',
+    onSurface: '#fff',
+    onBackground: '#fff',
+    onSurfaceVariant: '#ddd',
   },
 }
 
@@ -34,7 +44,6 @@ export default function RootLayout() {
     ...deviceTheme,
     colors: {
       ...deviceTheme.colors,
-      // primary: '#01a0aa',
     },
   }
 

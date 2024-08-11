@@ -45,9 +45,9 @@ export default function FactsScreen() {
   }
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused || !user) return;
     getFacts();
-  }, [isFocused]);
+  }, [isFocused && user]);
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

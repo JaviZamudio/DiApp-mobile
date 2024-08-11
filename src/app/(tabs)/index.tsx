@@ -4,9 +4,11 @@ import { prepareFactsForFuture } from "@/services/datosServices";
 import { getCurrentDate } from "@/utils/utils";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
+import { Card, Text, useTheme } from "react-native-paper";
 
 export default function HomePage() {
+  const theme = useTheme();
   const [apod, setApod] = useState({
     title: '',
     url: '',
@@ -61,13 +63,13 @@ export default function HomePage() {
     getAPOD();
     getFactOfTheDay();
     getConmemoration();
-    // prepareFactsForFuture();
+    prepareFactsForFuture();
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ backgroundColor: '#ddd' }}>
+    <ScrollView>
       {/* Fact of the day */}
-      <View style={{ backgroundColor: '#fff', padding: 20, margin: 20, borderRadius: 10, marginBottom: 0 }}>
+      <Card style={{ backgroundColor: theme.colors.surface, padding: 20, margin: 20, borderRadius: 10, marginBottom: 0 }}>
         {/* Fact title */}
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
           {factOfTheDay.titulo}
@@ -80,10 +82,10 @@ export default function HomePage() {
         <Text style={{ fontSize: 16, color: '#aaa', textAlign: 'right' }}>
           #FactOfTheDay
         </Text>
-      </View>
+      </Card>
 
       {/* Conmemoration */}
-      <View style={{ backgroundColor: '#fff', padding: 20, margin: 20, borderRadius: 10, marginBottom: 0 }}>
+      <Card style={{ backgroundColor: theme.colors.surface, padding: 20, margin: 20, borderRadius: 10, marginBottom: 0, display: conmemoration.contenido ? undefined : 'none' }}>
         {/* Conmemoration title */}
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
           {getCurrentDate()}
@@ -96,10 +98,10 @@ export default function HomePage() {
         <Text style={{ fontSize: 16, color: '#aaa', textAlign: 'right' }}>
           #Conmemoration
         </Text>
-      </View>
+      </Card>
 
       {/* Astronomy picture of the day */}
-      <View style={{ backgroundColor: '#fff', padding: 20, margin: 20, borderRadius: 10 }}>
+      <Card style={{ backgroundColor: theme.colors.surface, padding: 20, margin: 20, borderRadius: 10 }}>
         {/* Astronomy picture of the day title */}
         <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
           {apod.title}
@@ -108,14 +110,14 @@ export default function HomePage() {
         {apod.url &&
           <Image
             source={{ uri: apod.url }}
-            style={{ width: '100%', height: 300, marginBottom: 10 }}
+            style={{ width: '100%', marginBottom: 10, aspectRatio: 16 / 9, borderRadius: 10 }}
           />
         }
         {/* Tag (#AstronomyPictureOfTheDay) */}
         <Text style={{ fontSize: 16, color: '#aaa', textAlign: 'right' }}>
           #AstronomyPictureOfTheDay
         </Text>
-      </View>
+      </Card>
     </ScrollView>
   );
 }

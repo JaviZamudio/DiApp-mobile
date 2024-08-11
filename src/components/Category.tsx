@@ -28,7 +28,7 @@ export function Category({ category }: { category: UsableCategory; }) {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 20 }}>
-      <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: category.color }}></View>
+      <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: category.color + "b0" }}></View>
       <Text style={{ marginLeft: 10 }}>{category.nombre}</Text>
 
       <Checkbox
