@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, Linking, StyleSheet } from 'react-native';
+import { View, Linking, StyleSheet } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Text, useTheme } from 'react-native-paper';
 
 export function Credits() {
+    const theme = useTheme();
+
     const handleLinkPress = () => {
         // Linking.openURL('https://bout.sh');
         Linking.openURL('https://bout-sh.vercel.app');
@@ -12,9 +15,9 @@ export function Credits() {
     return (
         <View style={styles.container}>
             <Text>By </Text>
-            <View style={styles.link} onTouchEnd={handleLinkPress}>
+            <View style={{ ...styles.link, borderColor: theme.colors.onSurface }} onTouchEnd={handleLinkPress}>
                 <Text>Bout</Text>
-                <FontAwesome name="external-link" size={12} color="black" />
+                <FontAwesome name="external-link" size={12} color={theme.colors.onSurface} />
             </View>
         </View>
     );
@@ -24,7 +27,7 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginRight: 20,
         opacity: 0.5,
     },

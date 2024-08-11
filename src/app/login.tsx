@@ -1,16 +1,16 @@
 import { AuthContext } from "@/contexts/AuthContext";
 import { useContext, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import { Button, Text, TextInput, useTheme } from "react-native-paper";
 
 const logo = require('@/../assets/LogoPNG.png');
 
 export default function LoginPage() {
   const [loginOrRegister, setLoginOrRegister] = useState("login");
-  useContext(AuthContext);
+  const theme = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={styles.fullContainer}>
+    <ScrollView contentContainerStyle={{ ...styles.fullContainer, backgroundColor: theme.colors.background }}>
       <Image source={logo} style={styles.logoImage} />
       <Text style={styles.title}>DiApp</Text>
 
@@ -51,8 +51,8 @@ export default function LoginPage() {
 }
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("javier.elihu100@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
 
   return (
