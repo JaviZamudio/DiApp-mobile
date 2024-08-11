@@ -27,7 +27,7 @@ export const Fact = ({ fact }: { fact: UsableDato }) => {
   }, [fact]);
 
   return (
-    <Card style={{ padding: 20, margin: 20, borderRadius: 10, backgroundColor: fact.categoriaColor + "b0", opacity: 40, marginTop: 0 }} key={fact.id}>
+    <Card style={{ padding: 20, margin: 20, borderRadius: 10, backgroundColor: fact.categoriaColor + (theme.dark ? "b0" : ""), marginTop: 0 }} key={fact.id}>
       <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
         {fact.titulo}
       </Text>

@@ -6,6 +6,7 @@ import { MD3Theme, ThemeProp } from 'react-native-paper/lib/typescript/src/types
 
 const customLightTheme: MD3Theme = {
   ...MD3LightTheme,
+  dark: false,
   colors: {
     ...MD3LightTheme.colors,
     primary: '#01a0aa',
@@ -22,6 +23,7 @@ const customLightTheme: MD3Theme = {
 
 const customDarkTheme: MD3Theme = {
   ...MD3LightTheme,
+  dark: true,
   colors: {
     ...MD3LightTheme.colors,
     primary: '#01a0aa',
@@ -38,6 +40,7 @@ const customDarkTheme: MD3Theme = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme()
+  console.log('colorScheme', colorScheme)
   const deviceTheme = colorScheme === 'dark' ? customDarkTheme : customLightTheme
 
   const theme: ThemeProp = {

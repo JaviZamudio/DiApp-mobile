@@ -24,7 +24,19 @@ export default function HomePage() {
 
   const getAPOD = async () => {
     const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`);
-    const body = await response.json();
+    let body = await response.json();
+
+    const currYear = new Date().getFullYear() - 1;
+    const currMonth = new Date().getMonth() + 1;
+    let currDay = new Date().getDate();
+    while (body.media_type !== 'image') {
+      console.log("Got APOD but it's not an image, trying again");
+
+      const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}&date=${currYear}-${currMonth}-${currDay}`);
+      body = await response.json();
+
+      currDay--;
+    }
 
     console.log("Got APOD");
     setApod(body);
@@ -63,7 +75,7 @@ export default function HomePage() {
     getAPOD();
     getFactOfTheDay();
     getConmemoration();
-    prepareFactsForFuture();
+    // prepareFactsForFuture();
   }, []);
 
   return (

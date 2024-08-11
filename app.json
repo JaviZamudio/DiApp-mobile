@@ -2,11 +2,11 @@
   "expo": {
     "name": "DiApp",
     "slug": "diapp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "scheme": "diapp",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

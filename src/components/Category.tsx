@@ -2,7 +2,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { addCategory, removeCategory } from "@/services/categoriesServices";
 import { useContext, useState } from "react";
 import { View } from "react-native";
-import { Checkbox, Text } from "react-native-paper";
+import { Checkbox, Text, useTheme } from "react-native-paper";
 
 export interface UsableCategory {
   id: string;
@@ -13,6 +13,7 @@ export interface UsableCategory {
 export function Category({ category }: { category: UsableCategory; }) {
   const { user } = useContext(AuthContext);
   const [checked, setChecked] = useState(category.inUser);
+  const theme = useTheme();
 
   const handlePress = async () => {
     if (checked) {
@@ -28,7 +29,7 @@ export function Category({ category }: { category: UsableCategory; }) {
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginLeft: 20 }}>
-      <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: category.color + "b0" }}></View>
+      <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: category.color + (theme.dark ? "b0" : "") }}></View>
       <Text style={{ marginLeft: 10 }}>{category.nombre}</Text>
 
       <Checkbox
